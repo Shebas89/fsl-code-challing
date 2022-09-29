@@ -1,0 +1,23 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 14
+
+  pre-build:
+    on-failure: ABORT
+    commands:
+      - REPOSTORY_URI=596569993860.dkr.ecr.us-east-1.amazonaws.com/fsl-challange
+      - echo Logging in to Amazon ECR...
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 596569993860.dkr.ecr.us-east-1.amazonaws.com
+    
+  build:
+    on-failure: ABORT
+    commands:
+      - echo building new image...
+      - docker build -t fsl-challange .
+      - echo tagging new image...
+      - docker tag fsl-challange:latest 596569993860.dkr.ecr.us-east-1.amazonaws.com/fsl-challange:latest
+      - echo pushing new image...
+      - docker push $REPOSITORY_URI:latest
