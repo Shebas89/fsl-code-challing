@@ -5,7 +5,7 @@ phases:
     runtime-versions:
       nodejs: 14
 
-  pre-build:
+  pre_build:
     on-failure: ABORT
     commands:
       - REPOSTORY_URI=596569993860.dkr.ecr.us-east-1.amazonaws.com/fsl-challange
